@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Unit extends Model
+class Position extends Model
 {
     protected $keyType = 'string';
 
@@ -12,6 +12,6 @@ class Unit extends Model
 
     public $timestamps = false;
 
-    public $table = 'unit';
+    public $table = 'position';
 
 } 

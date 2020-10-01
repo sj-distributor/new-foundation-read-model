@@ -36,6 +36,14 @@ class UsStaffInfoDto implements DtoInterface
         public $locationDescription;
         public $positionStatus;
 
+
+        //
+        public $locationName;
+        public $driverCode;
+        public $derverExp;
+        public $companyName;
+        public $companyId;
+
     public function __construct(array $data)
     {
         $this->payrollName = @$data['payrollName'];
@@ -68,6 +76,11 @@ class UsStaffInfoDto implements DtoInterface
         $this->status = @$data['status'];
         $this->locationDescription = @$data['locationDescription'];
         $this->positionStatus= @$data['positionStatus'];
+        $this->locationName = @$data['locationName'];;
+        $this->driverCode = @$data['driverCode'];;
+        $this->derverExp = @$data['derverExp'];;
+        $this->companyName = @$data['companyName'];;
+        $this->companyId = @$data['companyId'];;
     }
 
     public function toArray(): Array

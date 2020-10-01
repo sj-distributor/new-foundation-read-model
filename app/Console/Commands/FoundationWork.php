@@ -101,7 +101,7 @@ class FoundationWork extends Command
             
             $exchange = $this->exchangeMaps[$this->getExchangeName($bodyData['messageType'][0])];
             
-            if ($bodyData['messageType'][0] == 'urn:message:HR.Foundation.Messages.Events:NewFoundationInitialisedAllStaffsEvent') {
+            if ($bodyData['messageType'][0] == 'urn:message:HR.Foundation.Messages.Events:NewFoundationInitialisedAllOrganisationStructuresEvent') {
                 $callback->delivery_info['channel']->basic_ack($callback->delivery_info['delivery_tag']);
             }
 

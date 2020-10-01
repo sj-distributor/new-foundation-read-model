@@ -3,8 +3,9 @@
 namespace App\Listeners;
 
 use App\Events\FoundationInitPositionEvent;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
+use App\Mappings\PositionMapping;
+use Illuminate\Support\Facades\DB;
+use App\Models\Position;
 
 class FoundationInitPositionListener
 {
@@ -26,6 +27,23 @@ class FoundationInitPositionListener
      */
     public function handle(FoundationInitPositionEvent $event)
     {
-        //
+        try {
+           
+            DB::beginTransaction();
+
+            DB::table('position')->truncate();
+            
+            foreach($event->data as $val) {
+                Position::create(PositionMapping::initToModel($val));
+            }
+
+            DB::commit();
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            // 抛出一个异常, 把任务返回错误的队列
+            throw new \Exception($e->getMessage());
+        }
     }
 }

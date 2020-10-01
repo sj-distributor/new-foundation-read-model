@@ -21,7 +21,6 @@ class StaffMapping
             "user_id"  => @$data['userID'],
             "username"  => @$data['userName'],
             "staff_positions"  => json_encode(@$data['staffPositions']),
-            "record"  => json_encode(@$data['record']),
             "us_staff_info" => isset($data['usStaffInfo']) ? (new UsStaffInfoDto($data['usStaffInfo']))->toJson():  null,
             "cn_staff_info" => isset($data['cnStaffInfo']) ? (new CnStaffInfoDto($data['cnStaffInfo']))->toJson():  null,
        ];

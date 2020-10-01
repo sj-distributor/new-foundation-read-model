@@ -30,7 +30,7 @@ class FoundationInitOrganisationListener
            
             DB::beginTransaction();
           
-            DB::table('units')->truncate();
+            DB::table('unit')->truncate();
             
             foreach($event->data as $val) { 
                 Unit::create(OrganizationMapping::initToModel($val));

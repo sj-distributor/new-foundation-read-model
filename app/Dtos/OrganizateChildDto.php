@@ -34,7 +34,7 @@ class OrganizateChildDto implements DtoInterface
                 'leaderIds' => $item['leaderIds'],
                 'id' => $item['entityId'],
                 'type' => $item['type'],
-                'children' => count($item['children']) ? $this->getChild($item['children']) : []
+                'children' => count($item['children']) ? ($this->getChild($item['children'])) : []
             ];
         }, $data);
         
