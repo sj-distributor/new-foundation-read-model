@@ -29,6 +29,7 @@ class FoundationInitStaffListener
     public function handle(FoundationInitStaffEvent $event)
     {
         try {
+           
             DB::beginTransaction();
 
             DB::table('staff')->truncate();

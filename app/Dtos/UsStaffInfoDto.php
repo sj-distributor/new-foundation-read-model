@@ -1,52 +1,73 @@
 <?php
 namespace App\Dtos;
 
-use App\Dto\DtoInterface;
-
+use App\Dtos\DtoInterface;
 class UsStaffInfoDto implements DtoInterface
 {
-    public $serialNumber;
-    public $politicalStatus;
-    public $maritalStatus;
-    public $phoneNumber;
-    public $hiredDate;
-    public $contractStatus;
-    public $workPlace;
-    public $terminatedDate;
-    public $seatNumber;
+        use NullDateTrait;
+        public $payrollName;
+        public $locationID;
+        public $ssn;
+        public $language;
+        public $wechatName;
+        public $wechatAccount;
+        public $backToWarehouse;
+        public $address;
+        public $city;
+        public $badge;
+        public $territoryCode;
+        public $postalCode;
+        public $personalMobile;
+        public $workPhone;
+        public $emergencyContact;
+        public $emergencyTel;
+        public $comment;
+        public $w4MaritalStatus;
+        public $w4Excomption;
+        public $w4MaritalState;
+        public $w4MaritalStateExcomption;
+        public $driverNumber;
+        public $hiredDate;
+        public $reHiredDate;
+        public $terminatedDate;
+        public $terminatedComment;
+        public $deletedDate;
+        public $status;
+        public $locationDescription;
+        public $positionStatus;
 
     public function __construct(array $data)
     {
-        $this->payrollName = $data['payrollName'],
-        $this->locationID = $data['payrollName'],
-        $this->ssn = $data['payrollName'],
-        $this->language = $data['payrollName'],
-        $this->wechatName = $data['payrollName'],
-        $this->wechatAccount = $data['payrollName'],
-        $this->backToWarehouse = $data['payrollName'],
-        $this->address = $data['payrollName'],
-        $this->city = $data['payrollName'],
-        $this->badge = $data['payrollName'],
-        $this->territoryCode = $data['payrollName'],
-        $this->postalCode = $data['payrollName'],
-        $this->personalMobile = $data['payrollName'],
-        $this->workPhone = $data['payrollName'],
-        $this->emergencyContact = $data['payrollName'],
-        $this->emergencyTel = $data['payrollName'],
-        $this->comment = $data['payrollName'],
-        $this->w4MaritalStatus = $data['payrollName'],
-        $this->w4Excomption = $data['payrollName'],
-        $this->w4MaritalState = $data['payrollName'],
-        $this->w4MaritalStateExcomption = $data['payrollName'],
-        $this->driverNumber = $data['payrollName'],
-        $this->hiredDate = $data['payrollName'],
-        $this->reHiredDate = $data['payrollName'],
-        $this->terminatedDate = $data['payrollName'],
-        $this->terminatedComment = $data['payrollName'],
-        $this->deletedDate = $data['payrollName'],
-        $this->status" = $data['payrollName'],
-        $this->locationDescription" = $data['payrollName'],
-        $this->positionStatus" = $data['payrollName']
+        $this->payrollName = @$data['payrollName'];
+        $this->locationID = @$data['locationID'];
+        $this->ssn = @$data['ssn'];
+        $this->language = @$data['language'];
+        $this->wechatName = @$data['wechatName'];
+        $this->wechatAccount = @$data['wechatAccount'];
+        $this->backToWarehouse = @$data['backToWarehouse'];
+        $this->address = @$data['address'];
+        $this->city = @$data['city'];
+        $this->badge = @$data['badge'];
+        $this->territoryCode = @$data['territoryCode'];
+        $this->postalCode = @$data['postalCode'];
+        $this->personalMobile = @$data['personalMobile'];
+        $this->workPhone = @$data['workPhone'];
+        $this->emergencyContact = @$data['emergencyContact'];
+        $this->emergencyTel = @$data['emergencyTel'];
+        $this->comment = @$data['comment'];
+        $this->w4MaritalStatus = @$data['w4MaritalStatus'];
+        $this->w4Excomption = @$data['w4Excomption'];
+        $this->w4MaritalState = @$data['w4MaritalState'];
+        $this->w4MaritalStateExcomption = @$data['w4MaritalStateExcomption'];
+        $this->driverNumber = @$data['driverNumber'];
+        $this->hiredDate = $this->formatDate(@$data['hiredDate']);
+        $this->reHiredDate =  $this->formatDate(@$data['reHiredDate']);
+        $this->terminatedDate =  $this->formatDate(@$data['terminatedDate']);
+        $this->terminatedComment = @$data['terminatedComment'];
+        $this->deletedDate = @$data['deletedDate'];
+        $this->status = @$data['status'];
+        $this->locationDescription = @$data['locationDescription'];
+        $this->positionStatus= @$data['positionStatus'];
     }
 
     public function toArray(): Array

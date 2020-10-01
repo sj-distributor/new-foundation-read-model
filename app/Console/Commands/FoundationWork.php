@@ -6,14 +6,14 @@ use Illuminate\Console\Command;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 
-class FoundationDemo extends Command
+class FoundationWork extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'FoundationDemo';
+    protected $signature = 'FoundationWork';
 
     /**
      * The console command description.
@@ -46,9 +46,6 @@ class FoundationDemo extends Command
      */
     public function handle()
     {
-
-        $a = new \App\Dto\CnStaffInfoDto([]);
-        dd($a->toArray());
         ini_set("memory_limit", "1024M");
 
         $queue = 'pick_mistake';
@@ -95,17 +92,21 @@ class FoundationDemo extends Command
     {
         try {
          //   $callback->delivery_info['channel']->basic_ack($callback->delivery_info['delivery_tag']); // 正常拿到消息后对RabbitMQ ack 回复
-
+            
             $body = $callback->body;
     
             $bodyData = json_decode($body, true);
             
             $exchange = $this->exchangeMaps[$this->getExchangeName($bodyData['messageType'][0])];
-         
-            new $exchange($bodyData['message']);
+
+            echo "[start] ".$exchange.PHP_EOL;
+            
+            event(new $exchange($bodyData['message']));
+
+            echo "[end] ".$exchange.PHP_EOL;
            
         } catch (\Exception $e) {
-           echo $e->getMessage(). $e->getFile().$e->getLine().PHP_EOL;
+           echo "[error] ".$exchange.$e->getMessage(). $e->getFile().$e->getLine().PHP_EOL;
         }
        
     }

@@ -1,10 +1,11 @@
 <?php
 namespace App\Dtos;
 
-use App\Dto\DtoInterface;
+use App\Dtos\DtoInterface;
 
 class CnStaffInfoDto implements DtoInterface
 {
+    use NullDateTrait;
     public $serialNumber;
     public $politicalStatus;
     public $maritalStatus;
@@ -17,15 +18,15 @@ class CnStaffInfoDto implements DtoInterface
 
     public function __construct(array $data)
     {
-        $this->serialNumber = $data['serialNumber'];
-        $this->politicalStatus = $data['serialNumber'];
-        $this->maritalStatus = $data['serialNumber'];
-        $this->phoneNumber = $data['serialNumber'];
-        $this->hiredDate = $data['serialNumber'];
-        $this->contractStatus = $data['serialNumber'];
-        $this->workPlace = $data['serialNumber'];
-        $this->terminatedDate = $data['serialNumber'];
-        $this->seatNumber = $data['serialNumber'];
+        $this->serialNumber = @$data['serialNumber'];
+        $this->politicalStatus = @$data['politicalStatus'];
+        $this->maritalStatus = @$data['maritalStatus'];
+        $this->phoneNumber = @$data['phoneNumber'];
+        $this->hiredDate = $this->formatDate(@$data['hiredDate']);
+        $this->contractStatus = @$data['contractStatus'];
+        $this->workPlace = @$data['workPlace'];
+        $this->terminatedDate = $this->formatDate(@$data['terminatedDate']);
+        $this->seatNumber = @$data['seatNumber'];
     }
 
     public function toArray(): Array
