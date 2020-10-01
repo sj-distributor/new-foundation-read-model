@@ -91,6 +91,8 @@ class FoundationWork extends Command
     private function callback($callback)
     {
         try {
+
+          
          //   $callback->delivery_info['channel']->basic_ack($callback->delivery_info['delivery_tag']); // 正常拿到消息后对RabbitMQ ack 回复
             
             $body = $callback->body;
@@ -98,15 +100,21 @@ class FoundationWork extends Command
             $bodyData = json_decode($body, true);
             
             $exchange = $this->exchangeMaps[$this->getExchangeName($bodyData['messageType'][0])];
+            
+            if ($bodyData['messageType'][0] == 'urn:message:HR.Foundation.Messages.Events:NewFoundationInitialisedAllStaffsEvent') {
+                $callback->delivery_info['channel']->basic_ack($callback->delivery_info['delivery_tag']);
+            }
 
             echo "[start] ".$exchange.PHP_EOL;
             
             event(new $exchange($bodyData['message']));
 
             echo "[end] ".$exchange.PHP_EOL;
+
+            
            
         } catch (\Exception $e) {
-           echo "[error] ".$exchange.$e->getMessage(). $e->getFile().$e->getLine().PHP_EOL;
+           echo "[error] ".$exchange.PHP_EOL.$e->getMessage(). $e->getFile().$e->getLine().PHP_EOL;
         }
        
     }

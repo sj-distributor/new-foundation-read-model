@@ -3,9 +3,9 @@
 namespace App\Listeners;
 
 use App\Events\FoundationInitdOrganisationEvent;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
-
+use App\Mappings\OrganizationMapping;
+use App\Models\Unit;
+use Illuminate\Support\Facades\DB;
 class FoundationInitOrganisationListener
 {
     /**
@@ -26,6 +26,22 @@ class FoundationInitOrganisationListener
      */
     public function handle(FoundationInitdOrganisationEvent $event)
     {
-        //
+        try {
+           
+            DB::beginTransaction();
+          
+            DB::table('units')->truncate();
+            
+            foreach($event->data as $val) { 
+                Unit::create(OrganizationMapping::initToModel($val));
+            }
+
+            DB::commit();
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            // 抛出一个异常, 把任务返回错误的队列
+            throw new \Exception($e->getMessage());
+        }
     }
 }
