@@ -1,8 +1,37 @@
 <?php
 
 return [
+
+    // env
+
+    'host' => env('QUEUE_HOST'),
+    'user' => env('QUEUE_USER'),
+    'password' => env('QUEUE_PASSWORD'),
+    'port' => env('QUEUE_PORT'),
+    'path' => env('QUEUE_PATH', '/'),
+    'queue_name' => env('QUEUE_NAME'),
+    'rabbitmq_queue_error' => env('QUEUE_ERROR'),
     
     'rabbitmq_queue_error' => 'pick_mistake_error',
+
+
+   // exchange maps 
+
+
+   'exchangeMaps' => [
+        'NewFoundationInitialisedAllOrganisationStructuresEvent' => \App\Events\FoundationInitdOrganisationEvent::class,
+        'NewFoundationInitialisedAllPositionsStructuresEvent' => \App\Events\FoundationInitPositionEvent::class,
+        'NewFoundationInitialisedAllStaffsEvent' => \App\Events\FoundationInitStaffEvent::class,
+        'StaffAddedEvent' => \App\Events\FoundationAddedStaffEvent::class,
+        'StaffUpdatedEvent' => \App\Events\FoundationUpdatedStaffEvent::class,
+        'PositionCreatedEvent' => \App\Events\FoundationAddedPositionEvent::class,
+        'PositionUpdatedEvent' => \App\Events\FoundationUpdatedPositionEvent::class,
+        'PositionDeletedEvent' => \App\Events\FoundationDeletedPositionEvent::class,
+        'OrganisationStructureSimpleCreatedEvent' => \App\Events\FoundationAddedUnitEvent::class,
+        'OrganisationStructureSimpleUpdatedEvent' => \App\Events\FoundationUpdatedUnitEvent::class,
+        'OrganisationStructureDeletedEvent' => \App\Events\FoundationDeletedUnitEvent::class
+   ],
+
     // table filed maps
 
     'staff' => [
@@ -24,11 +53,8 @@ return [
         'id' => 'id',
         'name' => 'name',
         'leader_ids' => 'leader_ids',
-        'username' => 'username',
         'type' => 'type',
         'type_desc' => 'type_desc',
-        'name_cn' => 'name_cn',
-        'name_en' => 'name_en',
         'children' => 'children',
         'is_active' => 'is_active',
         'parent_id' => 'parent_id',

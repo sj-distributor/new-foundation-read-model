@@ -3,8 +3,7 @@
 namespace App\Listeners;
 
 use App\Events\FoundationDeletedUnitEvent;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
+use App\Models\Unit;
 
 class FoundationDeletedUnitListener
 {
@@ -26,6 +25,6 @@ class FoundationDeletedUnitListener
      */
     public function handle(FoundationDeletedUnitEvent $event)
     {
-        //
+        Unit::where('id', $event->entityId)->delete();
     }
 }

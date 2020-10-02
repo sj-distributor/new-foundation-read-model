@@ -2,6 +2,8 @@
 
 namespace App\Console\Commands;
 
+use Error;
+use Exception;
 use Illuminate\Console\Command;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
@@ -33,8 +35,8 @@ class FoundationWork extends Command
         'PositionUpdatedEvent' => \App\Events\FoundationUpdatedPositionEvent::class,
         'PositionDeletedEvent' => \App\Events\FoundationDeletedPositionEvent::class,
         'OrganisationStructureSimpleCreatedEvent' => \App\Events\FoundationAddedUnitEvent::class,
-        'OrganisationStructureSimpleUpdatedEvent' => \App\Events\FoundationUpdatedUnitEvent::class
-
+        'OrganisationStructureSimpleUpdatedEvent' => \App\Events\FoundationUpdatedUnitEvent::class,
+        'OrganisationStructureDeletedEvent' => \App\Events\FoundationDeletedUnitEvent::class
     ];
 
     /**
@@ -56,15 +58,15 @@ class FoundationWork extends Command
     {
         ini_set("memory_limit", "1024M");
 
-        $queue = 'pick_mistake';
+        $queue = config('foundation.queue_name');
 
         $consumerTag = 'consumer-' . getmypid();
 
         $connection = new AMQPStreamConnection(
-            'mq-001.service.wiltechs.cn',
+            config('foundation.host'),
             5672,
-            'justim',
-            'justim',
+            config('foundation.user'),
+            config('foundation.password'),
             '/',
             false,
             'AMQPLAIN',
@@ -107,7 +109,7 @@ class FoundationWork extends Command
     
             $bodyData = json_decode($body, true);
             
-            $exchange = $this->exchangeMaps[$this->getExchangeName($bodyData['messageType'][0])];
+            $exchange = $this->getExchangeName($bodyData['messageType'][0]);
             
             $writeList = [
                 'urn:message:HR.Foundation.Messages.Events:NewFoundationInitialisedAllOrganisationStructuresEvent',
@@ -118,7 +120,9 @@ class FoundationWork extends Command
                 'urn:message:HR.Foundation.Messages.Events:PositionCreatedEvent',
                 'urn:message:HR.Foundation.Messages.Events:PositionUpdatedEvent',
                 'urn:message:HR.Foundation.Messages.Events:PositionDeletedEvent',
-                'urn:message:HR.Foundation.Messages.Events:OrganisationStructureSimpleCreatedEvent'
+                'urn:message:HR.Foundation.Messages.Events:OrganisationStructureSimpleCreatedEvent',
+                'urn:message:HR.Foundation.Messages.Events:OrganisationStructureSimpleUpdatedEvent',
+                'urn:message:HR.Foundation.Messages.Events:OrganisationStructureDeletedEvent'
             ];
            
             if (in_array($bodyData['messageType'][0], $writeList)) {
@@ -139,8 +143,18 @@ class FoundationWork extends Command
 
     private function getExchangeName(string $mesage): string
     {
-       $arr = explode(':', $mesage);
-       return array_pop($arr);
+       try {
+
+            $exchanges = config('foundation.exchangeMaps');
+
+            $arr = explode(':', $mesage);
+
+            return  $exchanges[array_pop($arr)];
+
+       } catch (\Exception $e) {
+            throw new Exception('can not found exchage');
+       }
+      
     }
 
      /**

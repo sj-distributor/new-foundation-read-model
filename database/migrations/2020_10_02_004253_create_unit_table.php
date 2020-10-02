@@ -14,10 +14,16 @@ class CreateUnitTable extends Migration
     public function up()
     {
         Schema::create('unit', function (Blueprint $table) {
-            $table->uuid(config('foundation.unit.id'));
-            $table->primary(config('foundation.unit.id'));
-            $table->char(config('foundation.unit.name'), 120);
-            $table->uuid(config('foundation.unit.id'));
+            $table->uuid(config('foundation.unit.id'))->nullable(false)->primary();
+            $table->char(config('foundation.unit.name'), 100);
+            $table->text(config('foundation.unit.leader_ids'));
+            $table->char(config('foundation.unit.type_desc'), 255)->nullable();
+            $table->tinyInteger(config('foundation.unit.type'));
+            $table->longText(config('foundation.unit.children'))->nullable();
+            $table->uuid(config('foundation.unit.parent_id'));
+            $table->text(config('foundation.unit.positions'))->nullable();
+            $table->tinyInteger(config('foundation.unit.country_code'));
+            $table->tinyInteger(config('foundation.unit.is_active'));
         });
     }
 

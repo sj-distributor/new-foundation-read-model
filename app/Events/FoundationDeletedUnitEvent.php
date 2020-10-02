@@ -13,15 +13,21 @@ use Illuminate\Queue\SerializesModels;
 class FoundationDeletedUnitEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
+    
+    public $id;
+
+    // 对应的是数据库的id
+    public $entityId;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($data)
     {
-        //
+        $this->id = $data['id'];
+        $this->entityId = $data['entityId'];
     }
 
     /**

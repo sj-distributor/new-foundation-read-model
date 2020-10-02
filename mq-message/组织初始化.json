@@ -1,5 +1,6 @@
 {
-	"organisationStructures": [{
+	"organisationStructures": [
+		{
 		"isActive": true,
 		"name": "WXF Office",
 		"leaderIds": ["78169187-b0ad-4378-89e6-940d9036c7a6"],
@@ -7,6 +8,7 @@
 		"entityId": "040f563b-7be8-43bc-81eb-f429f84db6a7",
 		"type": 8,
 		"typeDesc": "公司",
+		locationCode: null,
 		"children": [{
 			"name": "IS部",
 			"leaderIds": ["60956820-e2ea-4ee3-9ba2-54d826063460"],

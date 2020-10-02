@@ -14,8 +14,11 @@ class CreatePositionTable extends Migration
     public function up()
     {
         Schema::create('position', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->uuid(config('foundation.position.id'))->nullable(false)->primary();
+            $table->char(config('foundation.position.name'), 100);
+            $table->text(config('foundation.position.description'))->nullable();
+            $table->uuid(config('foundation.position.entity_id'));
+            $table->tinyInteger(config('foundation.position.is_active'));
         });
     }
 
