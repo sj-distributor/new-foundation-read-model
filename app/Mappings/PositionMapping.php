@@ -11,6 +11,7 @@ class PositionMapping
             "entity_id" => $data['entityId'],
             "name" => $data['name'],
             "is_active"  => isset($data['isActive']) ? $data['isActive'] : 0,
+            'description' => @$data['description']
        ];
     }
 }

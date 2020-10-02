@@ -36,11 +36,4 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
-    public getHiredDate() 
-    {
-        if (residentialCountry === 1) {
-            return $this->cnStaffInfo->
-        }
-    }
 }

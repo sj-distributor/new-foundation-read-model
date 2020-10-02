@@ -3,7 +3,7 @@
 namespace App\Listeners;
 
 use App\Events\FoundationInitdOrganisationEvent;
-use App\Mappings\OrganizationMapping;
+use App\Mappings\UnitMapping;
 use App\Models\Unit;
 use Illuminate\Support\Facades\DB;
 class FoundationInitOrganisationListener
@@ -33,7 +33,7 @@ class FoundationInitOrganisationListener
             DB::table('unit')->truncate();
             
             foreach($event->data as $val) { 
-                Unit::create(OrganizationMapping::initToModel($val));
+                Unit::create(UnitMapping::initToModel($val));
             }
 
             DB::commit();

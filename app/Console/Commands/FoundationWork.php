@@ -27,6 +27,14 @@ class FoundationWork extends Command
         'NewFoundationInitialisedAllOrganisationStructuresEvent' => \App\Events\FoundationInitdOrganisationEvent::class,
         'NewFoundationInitialisedAllPositionsStructuresEvent' => \App\Events\FoundationInitPositionEvent::class,
         'NewFoundationInitialisedAllStaffsEvent' => \App\Events\FoundationInitStaffEvent::class,
+        'StaffAddedEvent' => \App\Events\FoundationAddedStaffEvent::class,
+        'StaffUpdatedEvent' => \App\Events\FoundationUpdatedStaffEvent::class,
+        'PositionCreatedEvent' => \App\Events\FoundationAddedPositionEvent::class,
+        'PositionUpdatedEvent' => \App\Events\FoundationUpdatedPositionEvent::class,
+        'PositionDeletedEvent' => \App\Events\FoundationDeletedPositionEvent::class,
+        'OrganisationStructureSimpleCreatedEvent' => \App\Events\FoundationAddedUnitEvent::class,
+        'OrganisationStructureSimpleUpdatedEvent' => \App\Events\FoundationUpdatedUnitEvent::class
+
     ];
 
     /**
@@ -101,17 +109,27 @@ class FoundationWork extends Command
             
             $exchange = $this->exchangeMaps[$this->getExchangeName($bodyData['messageType'][0])];
             
-            if ($bodyData['messageType'][0] == 'urn:message:HR.Foundation.Messages.Events:NewFoundationInitialisedAllOrganisationStructuresEvent') {
+            $writeList = [
+                'urn:message:HR.Foundation.Messages.Events:NewFoundationInitialisedAllOrganisationStructuresEvent',
+                'urn:message:HR.Foundation.Messages.Events:NewFoundationInitialisedAllPositionsStructuresEvent',
+                'urn:message:HR.Foundation.Messages.Events:NewFoundationInitialisedAllStaffsEvent',
+                'urn:message:HR.Foundation.Messages.Events:StaffAddedEvent',
+                'urn:message:HR.Foundation.Messages.Events:StaffUpdatedEvent',
+                'urn:message:HR.Foundation.Messages.Events:PositionCreatedEvent',
+                'urn:message:HR.Foundation.Messages.Events:PositionUpdatedEvent',
+                'urn:message:HR.Foundation.Messages.Events:PositionDeletedEvent',
+                'urn:message:HR.Foundation.Messages.Events:OrganisationStructureSimpleCreatedEvent'
+            ];
+           
+            if (in_array($bodyData['messageType'][0], $writeList)) {
                 $callback->delivery_info['channel']->basic_ack($callback->delivery_info['delivery_tag']);
             }
 
             echo "[start] ".$exchange.PHP_EOL;
-            
+            file_put_contents(time().'a.json', json_encode($bodyData['message']));
             event(new $exchange($bodyData['message']));
 
             echo "[end] ".$exchange.PHP_EOL;
-
-            
            
         } catch (\Exception $e) {
            echo "[error] ".$exchange.PHP_EOL.$e->getMessage(). $e->getFile().$e->getLine().PHP_EOL;
@@ -123,5 +141,38 @@ class FoundationWork extends Command
     {
        $arr = explode(':', $mesage);
        return array_pop($arr);
+    }
+
+     /**
+     * 将错误的消息发送的error队列
+     * @param $channel
+     * @param array $bodyData
+     * @param \Exception $error
+     */
+    private function publishError($channel, $exchange, array $bodyData, \Exception $error)
+    {
+        $channel->exchange_declare(config('foundation.rabbitmq_queue_error'), 'direct', false, true, false);
+
+        $channel->queue_bind(config('foundation.rabbitmq_queue_error'), config('foundation.rabbitmq_queue_error'));
+
+        $bodyData["error"] = [
+            "code" => $error->getCode(),
+            "file" => $error->getFile(),
+            "line" => $error->getLine(),
+            "trace" => $error->getTraceAsString()
+        ];
+
+        $message = new AMQPMessage(
+            json_encode(
+                [
+                    'content' => $bodyData,
+                    'exchange' => $exchange
+                ]
+            ), 
+            array('content_type' => 'application/json', 
+            'delivery_mode' => AMQPMessage::DELIVERY_MODE_PERSISTENT)
+        );
+
+        $channel->basic_publish($message, config('foundation.rabbitmq_queue_error'));
     }
 }
