@@ -14,9 +14,7 @@ return [
     
     'rabbitmq_queue_error' => 'pick_mistake_error',
 
-
    // exchange maps 
-
 
    'exchangeMaps' => [
         'NewFoundationInitialisedAllOrganisationStructuresEvent' => Wiltechs\Foundation\Events\FoundationInitdOrganisationEvent::class,

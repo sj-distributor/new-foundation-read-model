@@ -37,43 +37,59 @@ class FoundationMakeCommand extends Command
     public function handle()
     {
         $this->createDirectories();
-        if(!file_exists(base_path('config/foundation.php')))
-        {
+        if (!file_exists(base_path('config/foundation.php'))) {
             copy(
-                __DIR__.'/stubs/config/foundation.php',
+                __DIR__ . '/stubs/config/foundation.php',
                 base_path('config/foundation.php')
             );
         }
 
+        if (file_exists(base_path(config('foundation.models_namespace') . '/Position.php'))) {
+            $this->error(base_path(config('foundation.models_namespace') . '/Position.php') . ' has exits');
+            return;
+        }
+
+        if (file_exists(base_path(config('foundation.models_namespace') . '/Unit.php'))) {
+            $this->error(base_path(config('foundation.models_namespace') . '/Unit.php') . ' has exits');
+            return;
+        }
+
+        if (file_exists(base_path(config('foundation.models_namespace') . '/Staff.php'))) {
+            $this->error(base_path(config('foundation.models_namespace') . '/Staff.php') . ' has exits');
+            return;
+        }
+
+
+
+
         copy(
-            __DIR__.'/stubs/migrations/2020_10_02_004238_create_staff_table.php',
+            __DIR__ . '/stubs/migrations/2020_10_02_004238_create_staff_table.php',
             database_path('migrations/2020_10_02_004238_create_staff_table.php')
         );
 
         copy(
-            __DIR__.'/stubs/migrations/2020_10_02_004310_create_position_table.php',
+            __DIR__ . '/stubs/migrations/2020_10_02_004310_create_position_table.php',
             database_path('migrations/2020_10_02_004310_create_position_table.php')
         );
 
         copy(
-            __DIR__.'/stubs/migrations/2020_10_02_004253_create_unit_table.php',
+            __DIR__ . '/stubs/migrations/2020_10_02_004253_create_unit_table.php',
             database_path('migrations/2020_10_02_004253_create_unit_table.php')
         );
 
-
         file_put_contents(
-            base_path(config('foundation.models_namespace').'/Staff.php'),
+            base_path(config('foundation.models_namespace') . '/Staff.php'),
             $this->compileStaffCNModelStub()
         );
 
         file_put_contents(
-            base_path(config('foundation.models_namespace').'/Position.php'),
-            $this->compilePositionCNModelStub()
+            base_path(config('foundation.models_namespace') . '/Unit.php'),
+            $this->compileStaffCNModelStub()
         );
 
         file_put_contents(
-            base_path(config('foundation.models_namespace').'/Unit.php'),
-            $this->compileUnitCNModelStub()
+            base_path(config('foundation.models_namespace') . '/Position.php'),
+            $this->compileStaffCNModelStub()
         );
 
         $this->info('successfully.');
@@ -84,11 +100,11 @@ class FoundationMakeCommand extends Command
      */
     protected function createDirectories()
     {
-        if (! is_dir($directory = base_path(config('foundation.models_namespace')))) {
+        if (!is_dir($directory = base_path(config('foundation.models_namespace')))) {
             mkdir($directory, 0755, true);
         }
 
-        if (! is_dir($directory = 'database\migrations')) {
+        if (!is_dir($directory = 'database\migrations')) {
             mkdir($directory, 0755, true);
         }
     }
@@ -98,7 +114,7 @@ class FoundationMakeCommand extends Command
         return str_replace(
             '{{namespace}}',
             config('foundation.models_namespace'),
-            file_get_contents(__DIR__.'/stubs/models/Staff.stub')
+            file_get_contents(__DIR__ . '/stubs/models/Staff.stub')
         );
     }
 
@@ -108,7 +124,7 @@ class FoundationMakeCommand extends Command
         return str_replace(
             '{{namespace}}',
             config('foundation.models_namespace'),
-            file_get_contents(__DIR__.'/stubs/models/Position.stub')
+            file_get_contents(__DIR__ . '/stubs/models/Position.stub')
         );
     }
 
@@ -117,8 +133,7 @@ class FoundationMakeCommand extends Command
         return str_replace(
             '{{namespace}}',
             config('foundation.models_namespace'),
-            file_get_contents(__DIR__.'/stubs/models/Unit.stub')
+            file_get_contents(__DIR__ . '/stubs/models/Unit.stub')
         );
     }
-
 }

@@ -2,9 +2,9 @@
 
 namespace Wiltechs\Foundation\Listeners;
 
-use App\Events\FoundationInitdOrganisationEvent;
-use App\Mappings\UnitMapping;
-use App\Models\Unit;
+use Wiltechs\Foundation\Events\FoundationInitdOrganisationEvent;
+use Wiltechs\Foundation\Mappings\UnitMapping;
+use Wiltechs\Foundation\Models\Unit;
 use Illuminate\Support\Facades\DB;
 class FoundationInitOrganisationListener
 {

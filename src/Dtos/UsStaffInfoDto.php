@@ -1,7 +1,7 @@
 <?php
 namespace Wiltechs\Foundation\Dtos;
 
-use App\Dtos\DtoInterface;
+use Wiltechs\Foundation\Dtos\Dtos\DtoInterface;
 class UsStaffInfoDto implements DtoInterface
 {
         use NullDateTrait;

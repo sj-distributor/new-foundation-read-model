@@ -2,9 +2,9 @@
 
 namespace Wiltechs\Foundation\Listeners;
 
-use App\Events\FoundationUpdatedUnitEvent;
-use App\Mappings\UnitMapping;
-use App\Models\Unit;
+use Wiltechs\Foundation\Events\FoundationUpdatedUnitEvent;
+use Wiltechs\Foundation\Mappings\UnitMapping;
+use Wiltechs\Foundation\Models\Unit;
 
 class FoundationUpdatedUnitListener
 {

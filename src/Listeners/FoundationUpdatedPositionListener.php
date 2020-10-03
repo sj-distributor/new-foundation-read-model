@@ -2,9 +2,9 @@
 
 namespace Wiltechs\Foundation\Listeners;
 
-use App\Events\FoundationUpdatedPositionEvent;
-use App\Models\Position;
-use App\Mappings\PositionMapping;
+use Wiltechs\Foundation\Events\FoundationUpdatedPositionEvent;
+use Wiltechs\Foundation\Models\Position;
+use Wiltechs\Foundation\Mappings\PositionMapping;
 
 class FoundationUpdatedPositionListener
 {

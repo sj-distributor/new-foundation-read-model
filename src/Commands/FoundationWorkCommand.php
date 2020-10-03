@@ -49,7 +49,7 @@ class FoundationWorkCommand extends Command
 
         $connection = new AMQPStreamConnection(
             config('foundation.host'),
-            5672,
+            config('foundation.port'),
             config('foundation.user'),
             config('foundation.password'),
             '/',
@@ -95,25 +95,6 @@ class FoundationWorkCommand extends Command
             $bodyData = json_decode($body, true);
             
             $exchange = $this->getExchangeName($bodyData['messageType'][0]);
-            
-            // @ 调试白名单
-            // $writeList = [
-            //     'urn:message:HR.Foundation.Messages.Events:NewFoundationInitialisedAllOrganisationStructuresEvent',
-            //     'urn:message:HR.Foundation.Messages.Events:NewFoundationInitialisedAllPositionsStructuresEvent',
-            //     'urn:message:HR.Foundation.Messages.Events:NewFoundationInitialisedAllStaffsEvent',
-            //     'urn:message:HR.Foundation.Messages.Events:StaffAddedEvent',
-            //     'urn:message:HR.Foundation.Messages.Events:StaffUpdatedEvent',
-            //     'urn:message:HR.Foundation.Messages.Events:PositionCreatedEvent',
-            //     'urn:message:HR.Foundation.Messages.Events:PositionUpdatedEvent',
-            //     'urn:message:HR.Foundation.Messages.Events:PositionDeletedEvent',
-            //     'urn:message:HR.Foundation.Messages.Events:OrganisationStructureSimpleCreatedEvent',
-            //     'urn:message:HR.Foundation.Messages.Events:OrganisationStructureSimpleUpdatedEvent',
-            //     'urn:message:HR.Foundation.Messages.Events:OrganisationStructureDeletedEvent'
-            // ];
-           
-            // if (in_array($bodyData['messageType'][0], $writeList)) {
-            //     $callback->delivery_info['channel']->basic_ack($callback->delivery_info['delivery_tag']);
-            // }
 
             $this->info("[start] ".$exchange);
            
@@ -123,7 +104,10 @@ class FoundationWorkCommand extends Command
            
         } catch (\Exception $e) {
             $this->error ("[error] ".$exchange.PHP_EOL.$e->getMessage(). $e->getFile().$e->getLine());
-           $this->publishError($callback->delivery_info['channel'], $exchange, $bodyData, $e);
+
+            if (config('foundation.rabbitmq_queue_error')) {
+                $this->publishError($callback->delivery_info['channel'], $exchange, $bodyData, $e);
+            }
         }
        
     }

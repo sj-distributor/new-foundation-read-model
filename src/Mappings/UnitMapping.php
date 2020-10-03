@@ -1,17 +1,20 @@
 <?php
 namespace Wiltechs\Foundation\Mappings;
 
+use Wiltechs\Foundation\Dtos\BooleanToIntTrait;
 use Wiltechs\Foundation\Dtos\OrganizateChild;
 use Wiltechs\Foundation\Dtos\OrganizateChildDto;
 
 
 class UnitMapping
 {
+    use BooleanToIntTrait;
+
     public static function initToModel($data)
     {
          return [
             config('foundation.unit.id') => $data['entityId'],
-            config('foundation.unit.is_active')  => isset($data['isActive']) ? $data['isActive'] : 0,
+            config('foundation.unit.is_active')  => isset($data['isActive']) ? self::booleanToInt($data['isActive']) : 0,
             config('foundation.unit.name') => $data['name'],
             config('foundation.unit.leader_ids')  => implode('.', $data['leaderIds']),   // @type Array
             config('foundation.unit.parent_id')  => @$data['parentEntityId'],
@@ -27,7 +30,7 @@ class UnitMapping
     {
         $output = [
             config('foundation.unit.id') => $data['entityId'],
-            config('foundation.unit.is_active') => isset($data['isActive']) ? $data['isActive'] : 0,
+            config('foundation.unit.is_active') => isset($data['isActive']) ? self::booleanToInt($data['isActive']) : 0,
             config('foundation.unit.name') => $data['name'],
             config('foundation.unit.leader_ids') => implode('.', $data['leaderIds']),   // @type Array
             config('foundation.unit.parent_id') => @$data['parentEntityId'],

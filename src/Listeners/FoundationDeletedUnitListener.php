@@ -2,8 +2,8 @@
 
 namespace Wiltechs\Foundation\Listeners;
 
-use App\Events\FoundationDeletedUnitEvent;
-use App\Models\Unit;
+use Wiltechs\Foundation\Events\FoundationDeletedUnitEvent;
+use Wiltechs\Foundation\Models\Unit;
 
 class FoundationDeletedUnitListener
 {

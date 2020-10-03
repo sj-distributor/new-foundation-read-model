@@ -19,33 +19,33 @@ return [
    // exchange maps 
 
    'exchangeMaps' => [
-        'NewFoundationInitialisedAllOrganisationStructuresEvent' => \App\Events\FoundationInitdOrganisationEvent::class,
-        'NewFoundationInitialisedAllPositionsStructuresEvent' => \App\Events\FoundationInitPositionEvent::class,
-        'NewFoundationInitialisedAllStaffsEvent' => \App\Events\FoundationInitStaffEvent::class,
-        'StaffAddedEvent' => \App\Events\FoundationAddedStaffEvent::class,
-        'StaffUpdatedEvent' => \App\Events\FoundationUpdatedStaffEvent::class,
-        'PositionCreatedEvent' => \App\Events\FoundationAddedPositionEvent::class,
-        'PositionUpdatedEvent' => \App\Events\FoundationUpdatedPositionEvent::class,
-        'PositionDeletedEvent' => \App\Events\FoundationDeletedPositionEvent::class,
-        'OrganisationStructureSimpleCreatedEvent' => \App\Events\FoundationAddedUnitEvent::class,
-        'OrganisationStructureSimpleUpdatedEvent' => \App\Events\FoundationUpdatedUnitEvent::class,
-        'OrganisationStructureDeletedEvent' => \App\Events\FoundationDeletedUnitEvent::class
+        'NewFoundationInitialisedAllOrganisationStructuresEvent' => Wiltechs\Foundation\Events\FoundationInitdOrganisationEvent::class,
+        'NewFoundationInitialisedAllPositionsStructuresEvent' => Wiltechs\Foundation\Events\FoundationInitPositionEvent::class,
+        'NewFoundationInitialisedAllStaffsEvent' => Wiltechs\Foundation\Events\FoundationInitStaffEvent::class,
+        'StaffAddedEvent' => Wiltechs\Foundation\Events\FoundationAddedStaffEvent::class,
+        'StaffUpdatedEvent' => Wiltechs\Foundation\Events\FoundationUpdatedStaffEvent::class,
+        'PositionCreatedEvent' => Wiltechs\Foundation\Events\FoundationAddedPositionEvent::class,
+        'PositionUpdatedEvent' => Wiltechs\Foundation\Events\FoundationUpdatedPositionEvent::class,
+        'PositionDeletedEvent' => Wiltechs\Foundation\Events\FoundationDeletedPositionEvent::class,
+        'OrganisationStructureSimpleCreatedEvent' => Wiltechs\Foundation\Events\FoundationAddedUnitEvent::class,
+        'OrganisationStructureSimpleUpdatedEvent' => Wiltechs\Foundation\Events\FoundationUpdatedUnitEvent::class,
+        'OrganisationStructureDeletedEvent' => Wiltechs\Foundation\Events\FoundationDeletedUnitEvent::class
    ],
 
 
     // event alias
     'events' => [
-        'NewFoundationInitialisedAllOrganisationStructuresEvent' => \App\Events\FoundationInitdOrganisationEvent::class,
-        'NewFoundationInitialisedAllPositionsStructuresEvent' => \App\Events\FoundationInitPositionEvent::class,
-        'NewFoundationInitialisedAllStaffsEvent' => \App\Events\FoundationInitStaffEvent::class,
-        'StaffAddedEvent' => \App\Events\FoundationAddedStaffEvent::class,
-        'StaffUpdatedEvent' => \App\Events\FoundationUpdatedStaffEvent::class,
-        'PositionCreatedEvent' => \App\Events\FoundationAddedPositionEvent::class,
-        'PositionUpdatedEvent' => \App\Events\FoundationUpdatedPositionEvent::class,
-        'PositionDeletedEvent' => \App\Events\FoundationDeletedPositionEvent::class,
-        'OrganisationStructureSimpleCreatedEvent' => \App\Events\FoundationAddedUnitEvent::class,
-        'OrganisationStructureSimpleUpdatedEvent' => \App\Events\FoundationUpdatedUnitEvent::class,
-        'OrganisationStructureDeletedEvent' => \App\Events\FoundationDeletedUnitEvent::class
+        'NewFoundationInitialisedAllOrganisationStructuresEvent' => Wiltechs\Foundation\Events\FoundationInitdOrganisationEvent::class,
+        'NewFoundationInitialisedAllPositionsStructuresEvent' => Wiltechs\Foundation\Events\FoundationInitPositionEvent::class,
+        'NewFoundationInitialisedAllStaffsEvent' => Wiltechs\Foundation\Events\FoundationInitStaffEvent::class,
+        'StaffAddedEvent' => Wiltechs\Foundation\Events\FoundationAddedStaffEvent::class,
+        'StaffUpdatedEvent' => Wiltechs\Foundation\Events\FoundationUpdatedStaffEvent::class,
+        'PositionCreatedEvent' => Wiltechs\Foundation\Events\FoundationAddedPositionEvent::class,
+        'PositionUpdatedEvent' => Wiltechs\Foundation\Events\FoundationUpdatedPositionEvent::class,
+        'PositionDeletedEvent' => Wiltechs\Foundation\Events\FoundationDeletedPositionEvent::class,
+        'OrganisationStructureSimpleCreatedEvent' => Wiltechs\Foundation\Events\FoundationAddedUnitEvent::class,
+        'OrganisationStructureSimpleUpdatedEvent' => Wiltechs\Foundation\Events\FoundationUpdatedUnitEvent::class,
+        'OrganisationStructureDeletedEvent' => Wiltechs\Foundation\Events\FoundationDeletedUnitEvent::class
     ],
 
     // listener alias

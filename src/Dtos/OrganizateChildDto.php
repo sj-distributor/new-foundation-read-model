@@ -1,7 +1,7 @@
 <?php
 namespace Wiltechs\Foundation\Dtos;
 
-use App\Dtos\DtoInterface;
+use Wiltechs\Foundation\Dtos\DtoInterface;
 
 class OrganizateChildDto implements DtoInterface
 {

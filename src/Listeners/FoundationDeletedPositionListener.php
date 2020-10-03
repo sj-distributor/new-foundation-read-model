@@ -2,10 +2,10 @@
 
 namespace Wiltechs\Foundation\Listeners;
 
-use App\Events\FoundationDeletedPositionEvent;
+use Wiltechs\Foundation\Events\FoundationDeletedPositionEvent;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
-use App\Models\Position;
+use Wiltechs\Foundation\Models\Position;
 
 class FoundationDeletedPositionListener
 {

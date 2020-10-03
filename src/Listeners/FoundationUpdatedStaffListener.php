@@ -2,9 +2,9 @@
 
 namespace Wiltechs\Foundation\Listeners;
 
-use App\Events\FoundationUpdatedStaffEvent;
-use App\Mappings\StaffMapping;
-use App\Models\Staff;
+use Wiltechs\Foundation\Events\FoundationUpdatedStaffEvent;
+use Wiltechs\Foundation\Mappings\StaffMapping;
+use Wiltechs\Foundation\Models\Staff;
 
 class FoundationUpdatedStaffListener
 {

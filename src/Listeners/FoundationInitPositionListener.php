@@ -2,10 +2,10 @@
 
 namespace Wiltechs\Foundation\Listeners;
 
-use App\Events\FoundationInitPositionEvent;
-use App\Mappings\PositionMapping;
+use Wiltechs\Foundation\Events\FoundationInitPositionEvent;
+use Wiltechs\Foundation\Mappings\PositionMapping;
 use Illuminate\Support\Facades\DB;
-use App\Models\Position;
+use Wiltechs\Foundation\Models\Position;
 
 class FoundationInitPositionListener
 {

@@ -19,11 +19,20 @@
             "Wiltechs\\Foundation\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "JohnDoe\\BlogPackage\\Tests\\": "tests"
+        }
+    },
     "extra": {
         "laravel": {
             "providers": [
                 "Wiltechs\\Foundation\\FoundationServiceProvider"
             ]
         }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.5",
+        "orchestra/testbench": "^5.7"
     }
 }

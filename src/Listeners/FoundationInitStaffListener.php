@@ -2,10 +2,10 @@
 
 namespace Wiltechs\Foundation\Listeners;
 
-use App\Events\FoundationInitStaffEvent;
+use Wiltechs\Foundation\Events\FoundationInitStaffEvent;
 use Illuminate\Support\Facades\DB;
-use App\Models\Staff;
-use App\Mappings\StaffMapping;
+use Wiltechs\Foundation\Models\Staff;
+use Wiltechs\Foundation\Mappings\StaffMapping;
 use Exception;
 
 class FoundationInitStaffListener
