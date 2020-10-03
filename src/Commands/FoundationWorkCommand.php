@@ -88,7 +88,7 @@ class FoundationWorkCommand extends Command
         try {
 
           
-           $callback->delivery_info['channel']->basic_ack($callback->delivery_info['delivery_tag']); // 正常拿到消息后对RabbitMQ ack 回复
+            $callback->delivery_info['channel']->basic_ack($callback->delivery_info['delivery_tag']); // 正常拿到消息后对RabbitMQ ack 回复
             
             $body = $callback->body;
     

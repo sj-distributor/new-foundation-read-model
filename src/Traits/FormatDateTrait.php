@@ -1,9 +1,9 @@
 <?php
-namespace Wiltechs\Foundation\Dtos;
+namespace Wiltechs\Foundation\Traits;
 
 use Illuminate\Support\Carbon;
 
-Trait NullDateTrait 
+Trait FormatDateTrait 
 {
     public function formatDate($date)
     {

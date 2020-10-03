@@ -4,6 +4,7 @@ namespace Wiltechs\Foundation\Mappings;
 use Wiltechs\Foundation\Dtos\BooleanToIntTrait;
 use Wiltechs\Foundation\Dtos\OrganizateChild;
 use Wiltechs\Foundation\Dtos\OrganizateChildDto;
+use Wiltechs\Foundation\Dtos\UnitPositionDto;
 
 
 class UnitMapping
@@ -13,15 +14,17 @@ class UnitMapping
     public static function initToModel($data)
     {
          return [
-            config('foundation.unit.id') => $data['entityId'],
+            config('foundation.unit.id') => strtoupper($data['entityId']),
             config('foundation.unit.is_active')  => isset($data['isActive']) ? self::booleanToInt($data['isActive']) : 0,
             config('foundation.unit.name') => $data['name'],
-            config('foundation.unit.leader_ids')  => implode('.', $data['leaderIds']),   // @type Array
-            config('foundation.unit.parent_id')  => @$data['parentEntityId'],
+            config('foundation.unit.leader_ids')  => strtoupper(implode('.', $data['leaderIds'])),   // @type Array
+            config('foundation.unit.parent_id')  => strtoupper(@$data['parentEntityId']),
             config('foundation.unit.type')  => $data['type'],
             config('foundation.unit.type_desc')  => @$data['typeDesc'],
             config('foundation.unit.children')  => isset($data['children']) ? self::getChildren($data['children']) : null,   // @type JSON
-            config('foundation.unit.positions')  => isset($data['positions']) ? json_encode($data['positions']): null,  // @type JSON
+            config('foundation.unit.positions')  => isset($data['positions']) ? 
+                                                    self::getPosition($data['positions']): 
+                                                    '[]',  // @type JSON
             config('foundation.unit.country_code')  => $data['countryCode']
          ];
     }
@@ -29,11 +32,11 @@ class UnitMapping
     public static function updateToModel($data)
     {
         $output = [
-            config('foundation.unit.id') => $data['entityId'],
+            config('foundation.unit.id') => strtoupper($data['entityId']),
             config('foundation.unit.is_active') => isset($data['isActive']) ? self::booleanToInt($data['isActive']) : 0,
             config('foundation.unit.name') => $data['name'],
-            config('foundation.unit.leader_ids') => implode('.', $data['leaderIds']),   // @type Array
-            config('foundation.unit.parent_id') => @$data['parentEntityId'],
+            config('foundation.unit.leader_ids') => strtoupper(implode('.', $data['leaderIds'])),   // @type Array
+            config('foundation.unit.parent_id') => strtoupper(@$data['parentEntityId']),
             config('foundation.unit.type') => $data['type'],
             config('foundation.unit.type_desc') => @$data['typeDesc'],
             config('foundation.unit.country_code') => $data['countryCode']
@@ -44,10 +47,22 @@ class UnitMapping
         }
 
         if (isset($data['positions'])) {
-            $output[config('foundation.unit.positions')] = isset($data['positions']) ? json_encode($data['positions']): null; 
+            $output[config('foundation.unit.positions')] = isset($data['positions']) ? 
+                                                             self::getPosition($data['positions']):
+                                                            '[]'; 
         }
 
         return $output;
+    }
+
+
+    public static function getPosition($positions)
+    {
+        $resutl = array_map(function($position) {
+            return (new UnitPositionDto($position))->toArray();
+        }, $positions);
+
+        return json_encode($resutl);
     }
 
     public static function getChildren($children)

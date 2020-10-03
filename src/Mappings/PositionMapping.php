@@ -10,8 +10,8 @@ class PositionMapping
     public static function initToModel($data)
     {
        return [
-            config('foundation.position.id')  => $data['id'],
-            config('foundation.position.entity_id') => $data['entityId'],
+            config('foundation.position.id')  => strtoupper($data['id']),
+            config('foundation.position.entity_id') => strtoupper($data['entityId']),
             config('foundation.position.name') => $data['name'],
             config('foundation.position.is_active')  => isset($data['isActive']) ?  self::booleanToInt($data['isActive']) : 0,
             config('foundation.position.description') => @$data['description']

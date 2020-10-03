@@ -16,9 +16,11 @@ class OrganizateChildDto implements DtoInterface
       // dd($data);
        $this->name = $data['name'];
 
-       $this->leaderIds = $data['leaderIds'];
+       $this->leaderIds = array_map(function($val) {
+            return strtoupper($val);  
+       }, $data['leaderIds']);
 
-       $this->id = $data['entityId'];
+       $this->id = strtoupper($data['entityId']);
 
        $this->type = $data['type'];
 
@@ -31,8 +33,10 @@ class OrganizateChildDto implements DtoInterface
         return array_map(function($item) {
             return [
                 'name' => $item['name'],
-                'leaderIds' => $item['leaderIds'],
-                'id' => $item['entityId'],
+                'leaderIds' => array_map(function($val) {
+                                return strtoupper($val);  
+                             }, $item['leaderIds']),
+                'id' => strtoupper($item['entityId']),
                 'type' => $item['type'],
                 'children' => count($item['children']) ? ($this->getChild($item['children'])) : []
             ];

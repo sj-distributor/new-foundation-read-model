@@ -1,10 +1,12 @@
 <?php
 namespace Wiltechs\Foundation\Dtos;
 
-use Wiltechs\Foundation\Dtos\Dtos\DtoInterface;
+use Wiltechs\Foundation\Dtos\DtoInterface;
+use Wiltechs\Foundation\Traits\FormatDateTrait;
 class UsStaffInfoDto implements DtoInterface
 {
-        use NullDateTrait;
+        use FormatDateTrait;
+              
         public $payrollName;
         public $locationID;
         public $ssn;
@@ -47,7 +49,7 @@ class UsStaffInfoDto implements DtoInterface
     public function __construct(array $data)
     {
         $this->payrollName = @$data['payrollName'];
-        $this->locationID = @$data['locationID'];
+        $this->locationID = strtoupper(@$data['locationID']);
         $this->ssn = @$data['ssn'];
         $this->language = @$data['language'];
         $this->wechatName = @$data['wechatName'];
@@ -80,7 +82,7 @@ class UsStaffInfoDto implements DtoInterface
         $this->driverCode = @$data['driverCode'];;
         $this->derverExp = @$data['derverExp'];;
         $this->companyName = @$data['companyName'];;
-        $this->companyId = @$data['companyId'];;
+        $this->companyId = strtoupper(@$data['companyId']);
     }
 
     public function toArray(): Array

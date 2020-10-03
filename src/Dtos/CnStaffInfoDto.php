@@ -2,10 +2,11 @@
 namespace Wiltechs\Foundation\Dtos;
 
 use Wiltechs\Foundation\Dtos\DtoInterface;
+use Wiltechs\Foundation\Traits\FormatDateTrait;
 
 class CnStaffInfoDto implements DtoInterface
 {
-    use NullDateTrait;
+    use FormatDateTrait;
     public $serialNumber;
     public $politicalStatus;
     public $maritalStatus;
