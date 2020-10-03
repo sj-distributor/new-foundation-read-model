@@ -1,0 +1,9 @@
+<?php
+namespace {{namespace}};
+
+use Wiltechs\Foundation\Models\Staff as Model;
+
+class Staff extends Model
+{
+    
+} 

@@ -1,0 +1,9 @@
+<?php
+namespace {{namespace}};
+
+use Wiltechs\Foundation\Models\Position as Model;
+
+class Position extends Model
+{
+    
+} 

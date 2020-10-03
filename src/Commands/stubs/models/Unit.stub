@@ -1,0 +1,9 @@
+<?php
+namespace {{namespace}};
+
+use Wiltechs\Foundation\Models\Unit as Model;
+
+class Unit extends Model
+{
+    
+} 
