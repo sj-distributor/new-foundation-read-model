@@ -32,7 +32,11 @@ class FoundationInitStaffListener
            
             DB::beginTransaction();
 
-            DB::table('staff')->truncate();
+            $staffs = Staff::all();
+
+            $staffs->each(function($staff) {
+                $staff->delete();
+            });
             
             foreach($event->data as $val) {
                 Staff::create(StaffMapping::initToModel($val));

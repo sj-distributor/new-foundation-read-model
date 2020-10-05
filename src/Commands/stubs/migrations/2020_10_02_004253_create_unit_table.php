@@ -14,6 +14,12 @@ class CreateUnitTable extends Migration
     public function up()
     {
         Schema::create('unit', function (Blueprint $table) {
+
+            // 指定表存储引擎
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8mb4';
+            $table->collation = 'utf8mb4_general_ci';
+
             $table->uuid(config('foundation.unit.id'))->nullable(false)->primary();
             $table->char(config('foundation.unit.name'), 100);
             $table->text(config('foundation.unit.leader_ids'));

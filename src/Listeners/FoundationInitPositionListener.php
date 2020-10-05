@@ -31,7 +31,11 @@ class FoundationInitPositionListener
            
             DB::beginTransaction();
 
-            DB::table('position')->truncate();
+            $options = Position::all();
+
+            $options->each(function($option) {
+                $option->delete();
+            });
             
             foreach($event->data as $val) {
                 Position::create(PositionMapping::initToModel($val));

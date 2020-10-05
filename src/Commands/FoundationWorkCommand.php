@@ -6,7 +6,8 @@ use Exception;
 use Illuminate\Console\Command;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
-
+use Illuminate\Support\Facades\Log;
+use Wiltechs\Foundation\Logger\LoggerHandler;
 
 class FoundationWorkCommand extends Command
 {
@@ -24,6 +25,7 @@ class FoundationWorkCommand extends Command
      */
     protected $description = 'Command description';
 
+    private $loggerhandler;
     /**
      * Create a new command instance.
      *
@@ -32,6 +34,8 @@ class FoundationWorkCommand extends Command
     public function __construct()
     {
         parent::__construct();
+
+        $this->loggerhandler = new LoggerHandler();
     }
 
     /**
@@ -96,14 +100,19 @@ class FoundationWorkCommand extends Command
             
             $exchange = $this->getExchangeName($bodyData['messageType'][0]);
 
-            $this->info("[start] ".$exchange);
+           
+            $this->loggerhandler->messageQueueLog($exchange, $bodyData);
+            
+            $this->info("[start] " .date('Y-m-d H:i:s').$exchange);
            
             event(new $exchange($bodyData['message']));
 
-            $this->info("[end] ".$exchange);
+            $this->info("[end] ".date('Y-m-d H:i:s').$exchange);
            
         } catch (\Exception $e) {
-            $this->error ("[error] ".$exchange.PHP_EOL.$e->getMessage(). $e->getFile().$e->getLine());
+            $this->error ("[error] ".date('Y-m-d H:i:s').$exchange);
+
+            $this->loggerhandler->messageQueueLog($callback->delivery_info['exchange'], $e->getMessage(). $e->getFile().$e->getLine());
 
             if (config('foundation.rabbitmq_queue_error')) {
                 $this->publishError($callback->delivery_info['channel'], $exchange, $bodyData, $e);
