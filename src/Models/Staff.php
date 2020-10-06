@@ -12,4 +12,6 @@ class Staff extends Model
 
     public $timestamps = false;
 
+    public $table = 'staff';
+
 } 
