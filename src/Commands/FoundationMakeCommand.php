@@ -79,17 +79,17 @@ class FoundationMakeCommand extends Command
 
         file_put_contents(
             base_path(config('foundation.models_namespace') . '/Staff.php'),
-            $this->compileStaffCNModelStub()
+            $this->compileStaffModelStub()
         );
 
         file_put_contents(
             base_path(config('foundation.models_namespace') . '/Unit.php'),
-            $this->compileStaffCNModelStub()
+            $this->compileUnitModelStub()
         );
 
         file_put_contents(
             base_path(config('foundation.models_namespace') . '/Position.php'),
-            $this->compileStaffCNModelStub()
+            $this->compilePositionModelStub()
         );
 
         $this->info('successfully.');
@@ -109,7 +109,7 @@ class FoundationMakeCommand extends Command
         }
     }
 
-    protected function compileStaffCNModelStub()
+    protected function compileStaffModelStub()
     {
         return str_replace(
             '{{namespace}}',
@@ -119,7 +119,7 @@ class FoundationMakeCommand extends Command
     }
 
 
-    protected function compilePositionCNModelStub()
+    protected function compilePositionModelStub()
     {
         return str_replace(
             '{{namespace}}',
@@ -128,7 +128,7 @@ class FoundationMakeCommand extends Command
         );
     }
 
-    protected function compileUnitCNModelStub()
+    protected function compileUnitModelStub()
     {
         return str_replace(
             '{{namespace}}',
